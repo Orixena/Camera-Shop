@@ -6,8 +6,17 @@ import SortingForm from '../../components/sorting-form/sorting-form';
 import ProductsList from '../../components/products-list/products-list';
 import Pagination from '../../components/pagination/pagination';
 import Footer from '../../components/footer/footer';
+import { useAppSelector } from '../../components/hooks';
+import { getProducts } from '../../store/products-data/products-data.selectors';
+import { Product } from '../../types/types';
+import { PRODUCTS_PRO_PAGE } from '../../const';
 
 function Main(): JSX.Element {
+
+  const products = useAppSelector(getProducts);
+  const sortedByPriceProducts = products.slice().sort((a: Product, b: Product) => a.price - b.price);
+  const renderedProducts = sortedByPriceProducts.slice(0,PRODUCTS_PRO_PAGE);
+
   return (
     <div className="wrapper">
       <Header />
@@ -24,7 +33,7 @@ function Main(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <SortingForm />
-                  <ProductsList />
+                  <ProductsList products={renderedProducts}/>
                   <Pagination />
                 </div>
               </div>

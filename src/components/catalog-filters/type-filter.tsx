@@ -15,7 +15,10 @@ function TypeFilter():JSX.Element {
       </div>
       <div className="custom-checkbox catalog-filter__item">
         <label>
-          <input type="checkbox" name="film" disabled />
+          <input type="checkbox"
+            name="film"
+            //disabled
+          />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">
               Плёночная
@@ -37,7 +40,7 @@ function TypeFilter():JSX.Element {
             type="checkbox"
             name="collection"
             //checked
-            disabled
+            //disabled
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">

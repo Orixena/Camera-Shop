@@ -1,18 +1,27 @@
-function ProductCard():JSX.Element {
+import { Product } from '../../types/types';
+
+type ProductCardProps = {
+  product: Product;
+}
+
+function ProductCard({product}: ProductCardProps):JSX.Element {
+
+  const { name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, reviewCount } = product;
+
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
           <source
             type="image/webp"
-            srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+            srcSet={`/${previewImgWebp}, /${previewImgWebp2x}`}
           />
           <img
-            src="img/content/das-auge.jpg"
-            srcSet="img/content/das-auge@2x.jpg 2x"
+            src={`/${previewImg}`}
+            srcSet={`/${previewImg2x}`}
             width={280}
             height={240}
-            alt="Ретрокамера «Das Auge IV»"
+            alt={name}
           />
         </picture>
       </div>
@@ -33,14 +42,14 @@ function ProductCard():JSX.Element {
           <svg width={17} height={16} aria-hidden="true">
             <use xlinkHref="#icon-star" />
           </svg>
-          <p className="visually-hidden">Рейтинг: 3</p>
+          <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>23
+            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
           </p>
         </div>
-        <p className="product-card__title">Ретрокамера Das Auge IV</p>
+        <p className="product-card__title">{name}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>73 450 ₽
+          <span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
       <div className="product-card__buttons">

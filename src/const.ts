@@ -1,3 +1,5 @@
+export const PRODUCTS_PRO_PAGE = 9;
+
 export enum AppRoute {
   Main = '/',
   Product = '/product/:id',
