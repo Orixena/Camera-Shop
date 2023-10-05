@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Banner from '../../components/banner/banner';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
@@ -19,6 +20,9 @@ function Main(): JSX.Element {
 
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>Camera Shop.Main page</title>
+      </Helmet>
       <Header />
       <main>
         <Banner />

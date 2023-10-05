@@ -13,6 +13,7 @@ export enum AppRoute {
 export enum FetchingNameSpace {
   Products = 'PRODUCTS',
   Product = 'PRODUCT',
+  Promo = 'PROMO',
 }
 
 export enum RequestStatus {
@@ -23,6 +24,7 @@ export enum RequestStatus {
 }
 
 export enum APIRoute {
-  Products = '/cameras'
+  Products = '/cameras',
+  Promo = '/promo',
 }
 

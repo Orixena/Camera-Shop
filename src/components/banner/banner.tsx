@@ -1,4 +1,11 @@
+import { useAppSelector } from '../../components/hooks';
+import { getPromo } from '../../store/promo-data/promo-data.selectors';
+
 function Banner(): JSX.Element {
+
+  const promo = useAppSelector(getPromo);
+  console.log('promo', promo);
+
   return (
     <div className="banner">
       <picture>

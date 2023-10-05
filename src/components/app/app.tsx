@@ -6,9 +6,23 @@ import Main from '../../pages/main/main';
 import Product from '../../pages/product/product';
 import Basket from '../../pages/basket/basket';
 import Page404 from '../../pages/page404/page404';
-import { AppRoute } from '../../const';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppSelector } from '../hooks';
+import { getFetchingStatusProducts } from '../../store/products-data/products-data.selectors';
+import { getFetchingStatusPromo } from '../../store/promo-data/promo-data.selectors';
+import { AppRoute, RequestStatus } from '../../const';
 
 function App(): JSX.Element {
+
+  const isProductsDataLoading = useAppSelector(getFetchingStatusProducts);
+  const isPromoDataLoading = useAppSelector(getFetchingStatusPromo);
+
+  if(isProductsDataLoading === RequestStatus.Pending || isPromoDataLoading === RequestStatus.Pending) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>

@@ -8,7 +8,6 @@ export const getProducts = createSelector(
   (state: ProductsData) => state.products
 );
 
-
 export const getFetchingStatusProducts = createSelector(
   (state: State) => state[FetchingNameSpace.Products],
   (state: ProductsData) => state.fetchingStatusProducts
