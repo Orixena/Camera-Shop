@@ -31,14 +31,10 @@ function App(): JSX.Element {
             path={AppRoute.Main}
             element={<Main />}
           />
-          <Route path={AppRoute.Product}>
-            <Route
-              path=':id'
-              element={
-                <Product />
-              }
-            />
-          </Route>
+          <Route
+            path={AppRoute.Product}
+            element={<Product />}
+          />
           <Route
             path={AppRoute.Basket}
             element={<Basket />}

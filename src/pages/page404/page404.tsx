@@ -6,7 +6,7 @@ function Page404(): JSX.Element{
   return (
     <div className={styles.wrapper}>
       <Helmet>
-        <title>Six cities.Page not found</title>
+        <title>Camera Shop.Page not found</title>
       </Helmet>
       <h1>Страница не найдена</h1>
       <p>Извините, нам не удается найти такую страницу</p>

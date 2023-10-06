@@ -1,4 +1,4 @@
-
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
 import Footer from '../../components/footer/footer';
@@ -6,6 +6,9 @@ import Footer from '../../components/footer/footer';
 function Product():JSX.Element {
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>Camera Shop.Product page</title>
+      </Helmet>
       <Header />
       <main>
         <div className="page-content">

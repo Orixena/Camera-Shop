@@ -1,3 +1,4 @@
+import DetailsButton from '../buttons/details-button';
 import { Product } from '../../types/types';
 
 type ProductCardProps = {
@@ -6,7 +7,7 @@ type ProductCardProps = {
 
 function ProductCard({product}: ProductCardProps):JSX.Element {
 
-  const { name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, reviewCount } = product;
+  const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, reviewCount } = product;
 
   return (
     <div className="product-card">
@@ -56,9 +57,7 @@ function ProductCard({product}: ProductCardProps):JSX.Element {
         <button className="btn btn--purple product-card__btn" type="button">
           Купить
         </button>
-        <a className="btn btn--transparent" href="#">
-          Подробнее
-        </a>
+        <DetailsButton type='btn--transparent' id={id}/>
       </div>
     </div>
   );
