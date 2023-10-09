@@ -8,15 +8,19 @@ import ProductsList from '../../components/products-list/products-list';
 import Pagination from '../../components/pagination/pagination';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../components/hooks';
-import { getProducts } from '../../store/products-data/products-data.selectors';
+import { getProducts, getPageNumber } from '../../store/products-data/products-data.selectors';
 import { Product } from '../../types/types';
-import { PRODUCTS_PRO_PAGE } from '../../const';
+import { PRODUCTS_PRO_PAGE, MAX_PAGINATION_PAGES_COUNT } from '../../const';
 
 function Main(): JSX.Element {
 
   const products = useAppSelector(getProducts);
+  const currentPage = useAppSelector(getPageNumber);
   const sortedByPriceProducts = products.slice().sort((a: Product, b: Product) => a.price - b.price);
-  const renderedProducts = sortedByPriceProducts.slice(0,PRODUCTS_PRO_PAGE);
+
+  const offset = currentPage * PRODUCTS_PRO_PAGE;
+  const currentPageData = sortedByPriceProducts.slice(offset, offset + PRODUCTS_PRO_PAGE);
+  const pageCount = Math.ceil(sortedByPriceProducts.length / PRODUCTS_PRO_PAGE);
 
   return (
     <div className="wrapper">
@@ -37,8 +41,8 @@ function Main(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <SortingForm />
-                  <ProductsList products={renderedProducts}/>
-                  <Pagination />
+                  <ProductsList products={currentPageData}/>
+                  {pageCount > 1 && <Pagination pageCount={pageCount} currentPage={currentPage}/>}
                 </div>
               </div>
             </div>

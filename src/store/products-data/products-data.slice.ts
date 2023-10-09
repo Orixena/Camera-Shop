@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchProductsAction } from '../api-actions';
 import { ProductsData } from '../../types/types';
 import { RequestStatus, FetchingNameSpace } from '../../const';
@@ -6,12 +6,17 @@ import { RequestStatus, FetchingNameSpace } from '../../const';
 const initialState: ProductsData = {
   products: [],
   fetchingStatusProducts: RequestStatus.Unsent,
+  page: 0,
 };
 
 export const productsData = createSlice({
   name: FetchingNameSpace.Products,
   initialState,
-  reducers:{},
+  reducers:{
+    changePage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchProductsAction.pending, (state) => {
@@ -26,3 +31,5 @@ export const productsData = createSlice({
       });
   }
 });
+
+export const { changePage } = productsData.actions;

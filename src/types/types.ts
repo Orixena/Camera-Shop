@@ -24,6 +24,7 @@ export type Product = {
 export type ProductsData = {
   products: Product[];
   fetchingStatusProducts: RequestStatus;
+  page: number;
 }
 
 export type Promo = {

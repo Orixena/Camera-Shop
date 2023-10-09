@@ -12,3 +12,8 @@ export const getFetchingStatusProducts = createSelector(
   (state: State) => state[FetchingNameSpace.Products],
   (state: ProductsData) => state.fetchingStatusProducts
 );
+
+export const getPageNumber = createSelector(
+  (state: State) => state[FetchingNameSpace.Products],
+  (state: ProductsData) => state.page
+);

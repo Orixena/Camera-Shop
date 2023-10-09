@@ -1,5 +1,7 @@
 export const PRODUCTS_PRO_PAGE = 9;
 
+export const MAX_PAGINATION_PAGES_COUNT = 3;
+
 export enum AppRoute {
   Main = '/',
   Product = '/product/:id',
