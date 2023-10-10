@@ -12,8 +12,7 @@ import Footer from '../../components/footer/footer';
 import { useAppSelector, useAppDispatch } from '../../components/hooks';
 import {
   getProducts,
-  getPageNumber,
-  getPaginationsPages,
+  getPageNumber
 } from '../../store/products-data/products-data.selectors';
 import { Product } from '../../types/types';
 import { PRODUCTS_PRO_PAGE } from '../../const';
@@ -22,7 +21,6 @@ import { changePage } from '../../store/products-data/products-data.slice';
 function Main(): JSX.Element {
   const products = useAppSelector(getProducts);
   const currentPage = useAppSelector(getPageNumber);
-  const paginationsPages = useAppSelector(getPaginationsPages);
   const dispatch = useAppDispatch();
 
   const sortedByPriceProducts = products
@@ -75,7 +73,6 @@ function Main(): JSX.Element {
                     <Pagination
                       pageCount={pageCount}
                       currentPage={currentPage}
-                      paginationsPages={paginationsPages}
                     />
                   )}
                 </div>

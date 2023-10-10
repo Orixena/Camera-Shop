@@ -7,7 +7,6 @@ const initialState: ProductsData = {
   products: [],
   fetchingStatusProducts: RequestStatus.Unsent,
   page: 0,
-  paginationPages: [0,1,2],
 };
 
 export const productsData = createSlice({
@@ -16,9 +15,6 @@ export const productsData = createSlice({
   reducers:{
     changePage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    },
-    changePaginationPages: (state, action: PayloadAction<number[]>) => {
-      state.paginationPages = action.payload;
     }
   },
   extraReducers(builder) {
@@ -36,4 +32,4 @@ export const productsData = createSlice({
   }
 });
 
-export const { changePage, changePaginationPages } = productsData.actions;
+export const { changePage } = productsData.actions;

@@ -25,7 +25,6 @@ export type ProductsData = {
   products: Product[];
   fetchingStatusProducts: RequestStatus;
   page: number;
-  paginationPages: number[];
 }
 
 export type Promo = {
