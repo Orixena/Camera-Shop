@@ -17,3 +17,8 @@ export const getPageNumber = createSelector(
   (state: State) => state[FetchingNameSpace.Products],
   (state: ProductsData) => state.page
 );
+
+export const getPaginationsPages = createSelector(
+  (state: State) => state[FetchingNameSpace.Products],
+  (state: ProductsData) => state.paginationPages
+);

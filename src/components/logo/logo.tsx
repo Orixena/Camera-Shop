@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 function Logo():JSX.Element {
   return (
-    <Link
+    <a
       className="header__logo"
-      to={AppRoute.Main}
+      href={AppRoute.Main}
       aria-label="Переход на главную"
     >
       <svg width={100} height={36} aria-hidden="true">
         <use xlinkHref="#icon-logo" />
       </svg>
-    </Link>
+    </a>
   );
 }
 
