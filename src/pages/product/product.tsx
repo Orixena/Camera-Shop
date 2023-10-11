@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { fetchActiveProduct } from '../../store/api-actions';
 import { getActiveProduct } from '../../store/active-product-data/active-product-data.selectors';
@@ -8,25 +8,48 @@ import { AppRoute } from '../../const';
 import Header from '../../components/header/header';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
 import Footer from '../../components/footer/footer';
+import classNames from 'classnames';
 
-function Product():JSX.Element {
-
+function Product(): JSX.Element {
   const { id } = useParams();
-  console.log(id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchActiveProduct(Number(id)))
-      .catch(() => {
-        navigate(AppRoute.NotFound);
-      });
+    dispatch(fetchActiveProduct(Number(id))).catch(() => {
+      navigate(AppRoute.NotFound);
+    });
   }, [dispatch, navigate, id]);
 
   const product = useAppSelector(getActiveProduct);
-  console.log(product);
 
-  if(!product){
+  const [isActiveDescription, setIsActiveDescription] = useState(true);
+  const [param, setParams] = useSearchParams();
+
+  useEffect(() => {
+    if(param.size === 0){
+      setParams({about: 'description'});
+    }
+    const urlAbout = param.get('about');
+    if(urlAbout === 'characteristic'){
+      setIsActiveDescription(false);
+      setParams({about: 'characteristic'});
+    }
+  }, [param, setParams]);
+
+  const onCharacteristicButtonClick = () => {
+    setIsActiveDescription(false);
+    setParams({about: 'characteristic'});
+
+  };
+
+  const onDescriptionButtonClick = () => {
+    setIsActiveDescription(true);
+    setParams({about: 'description'});
+  };
+
+
+  if (!product) {
     return <div></div>;
   }
 
@@ -77,11 +100,13 @@ function Product():JSX.Element {
                     </svg>
                     <p className="visually-hidden">Рейтинг: {product.rating}</p>
                     <p className="rate__count">
-                      <span className="visually-hidden">Всего оценок:</span>{product.reviewCount}
+                      <span className="visually-hidden">Всего оценок:</span>
+                      {product.reviewCount}
                     </p>
                   </div>
                   <p className="product__price">
-                    <span className="visually-hidden">Цена:</span>{product.price} ₽
+                    <span className="visually-hidden">Цена:</span>
+                    {product.price} ₽
                   </p>
                   <button className="btn btn--purple" type="button">
                     <svg width={24} height={16} aria-hidden="true">
@@ -91,15 +116,29 @@ function Product():JSX.Element {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button className="tabs__control" type="button">
+                      <button className={classNames({
+                        'tabs__control': true,
+                        'is-active': !isActiveDescription
+                      })} type="button"
+                      onClick={onCharacteristicButtonClick}
+                      >
                         Характеристики
                       </button>
-                      <button className="tabs__control is-active" type="button">
+                      <button className={classNames({
+                        'tabs__control': true,
+                        'is-active': isActiveDescription
+                      })} type="button" onClick={onDescriptionButtonClick}
+                      >
                         Описание
                       </button>
                     </div>
                     <div className="tabs__content">
-                      <div className="tabs__element">
+                      <div className={classNames({
+                        'tabs__element': true,
+                        'is-active': !isActiveDescription,
+                        'visually-hidden': isActiveDescription
+                      })}
+                      >
                         <ul className="product__tabs-list">
                           <li className="item-list">
                             <span className="item-list__title">Артикул:</span>
@@ -119,7 +158,12 @@ function Product():JSX.Element {
                           </li>
                         </ul>
                       </div>
-                      <div className="tabs__element is-active">
+                      <div className={classNames({
+                        'tabs__element': true,
+                        'is-active': isActiveDescription,
+                        'visually-hidden': !isActiveDescription
+                      })}
+                      >
                         <div className="product__tabs-text">
                           <p>
                             {product.description}
@@ -173,7 +217,10 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 4</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>12
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
+                            12
                           </p>
                         </div>
                         <p className="product-card__title">FastShot MR-5</p>
@@ -228,7 +275,10 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 3</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>23
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
+                            23
                           </p>
                         </div>
                         <p className="product-card__title">
@@ -285,7 +335,9 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 5</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
                             849
                           </p>
                         </div>
@@ -341,7 +393,10 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 4</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>12
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
+                            12
                           </p>
                         </div>
                         <p className="product-card__title">FastShot MR-5</p>
@@ -396,7 +451,10 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 3</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>23
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
+                            23
                           </p>
                         </div>
                         <p className="product-card__title">
@@ -453,7 +511,9 @@ function Product():JSX.Element {
                           </svg>
                           <p className="visually-hidden">Рейтинг: 5</p>
                           <p className="rate__count">
-                            <span className="visually-hidden">Всего оценок:</span>
+                            <span className="visually-hidden">
+                              Всего оценок:
+                            </span>
                             849
                           </p>
                         </div>
@@ -549,10 +609,10 @@ function Product():JSX.Element {
                       <li className="item-list">
                         <span className="item-list__title">Комментарий:</span>
                         <p className="item-list__text">
-                          Раз в полгода достаю из-под стекла, стираю пыль, заряжаю —
-                          работает как часы. Ни у кого из знакомых такой нет, все
-                          завидуют) Теперь это жемчужина моей коллекции, однозначно
-                          стоит своих денег!
+                          Раз в полгода достаю из-под стекла, стираю пыль,
+                          заряжаю — работает как часы. Ни у кого из знакомых
+                          такой нет, все завидуют) Теперь это жемчужина моей
+                          коллекции, однозначно стоит своих денег!
                         </p>
                       </li>
                     </ul>
@@ -597,12 +657,12 @@ function Product():JSX.Element {
                         <span className="item-list__title">Комментарий:</span>
                         <p className="item-list__text">
                           При попытке вставить плёнку сломался механизм открытия
-                          отсека, пришлось заклеить его изолентой. Начал настраивать
-                          фокус&nbsp;— линза провалилась внутрь корпуса. Пока
-                          доставал — отломилось несколько лепестков диафрагмы. От
-                          злости стукнул камеру об стол, и рукоятка треснула
-                          пополам. Склеил всё суперклеем, теперь прижимаю ей бумагу.
-                          НЕ РЕКОМЕНДУЮ!!!
+                          отсека, пришлось заклеить его изолентой. Начал
+                          настраивать фокус&nbsp;— линза провалилась внутрь
+                          корпуса. Пока доставал — отломилось несколько
+                          лепестков диафрагмы. От злости стукнул камеру об стол,
+                          и рукоятка треснула пополам. Склеил всё суперклеем,
+                          теперь прижимаю ей бумагу. НЕ РЕКОМЕНДУЮ!!!
                         </p>
                       </li>
                     </ul>
@@ -644,9 +704,10 @@ function Product():JSX.Element {
                       <li className="item-list">
                         <span className="item-list__title">Комментарий:</span>
                         <p className="item-list__text">
-                          Дорого для портативной видеокамеры, но в моей коллекции
-                          как раз не хватало такого экземпляра. Следов использования
-                          нет, доставили в заводской упаковке, выглядит шикарно!
+                          Дорого для портативной видеокамеры, но в моей
+                          коллекции как раз не хватало такого экземпляра. Следов
+                          использования нет, доставили в заводской упаковке,
+                          выглядит шикарно!
                         </p>
                       </li>
                     </ul>
