@@ -56,6 +56,24 @@ function Main(): JSX.Element {
     document.body.style.overflow = 'hidden';
   };
 
+  const onOverlayOrExitClick = () => {
+    setIsModalBuyShow(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  useEffect(() => {
+    const onClickEsc = (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
+        onOverlayOrExitClick();
+      }
+    };
+    document.addEventListener('keydown', onClickEsc);
+
+    return () => {
+      document.removeEventListener('keydown', onClickEsc);
+    };
+  }, []);
+
   return (
     <div className="wrapper">
       <Helmet>
@@ -87,7 +105,7 @@ function Main(): JSX.Element {
             </div>
           </section>
         </div>
-        <BuyModal isActive={isModalBuyShow}/>
+        <BuyModal isActive={isModalBuyShow} onOverlayOrExitClick={onOverlayOrExitClick}/>
       </main>
       <Footer />
     </div>

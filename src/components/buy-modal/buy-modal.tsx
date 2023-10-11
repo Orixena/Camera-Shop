@@ -3,16 +3,20 @@ import { getActiveProduct } from '../../store/active-product-data/active-product
 
 type BuyModalProps = {
   isActive: boolean;
+  onOverlayOrExitClick: () => void;
 }
 
-function BuyModal({isActive}:BuyModalProps): JSX.Element {
+function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element {
 
   const activeProduct = useAppSelector(getActiveProduct);
 
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div onClick={() => {
+          onOverlayOrExitClick();
+        }} className="modal__overlay"
+        />
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
@@ -62,7 +66,11 @@ function BuyModal({isActive}:BuyModalProps): JSX.Element {
             type="button"
             aria-label="Закрыть попап"
           >
-            <svg width={10} height={10} aria-hidden="true">
+            <svg onClick={() => {
+              onOverlayOrExitClick();
+            }}
+            width={10} height={10} aria-hidden="true"
+            >
               <use xlinkHref="#icon-close" />
             </svg>
           </button>
