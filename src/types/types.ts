@@ -40,3 +40,10 @@ export type PromoData = {
   promo: Promo[];
   fetchingStatusPromo: RequestStatus;
 }
+
+export type ActiveProduct = Product | null;
+
+export type ActiveProductData = {
+  activeProduct: ActiveProduct;
+  fetchingStatusActiveProduct: RequestStatus;
+}

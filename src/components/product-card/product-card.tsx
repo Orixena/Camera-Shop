@@ -1,11 +1,13 @@
 import DetailsButton from '../buttons/details-button';
+import BuyButton from '../buy-button/buy-button';
 import { Product } from '../../types/types';
 
 type ProductCardProps = {
   product: Product;
+  onBuyButtonClick: (id: number) => void;
 }
 
-function ProductCard({product}: ProductCardProps):JSX.Element {
+function ProductCard({product,onBuyButtonClick}: ProductCardProps):JSX.Element {
 
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, reviewCount } = product;
 
@@ -54,9 +56,7 @@ function ProductCard({product}: ProductCardProps):JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">
-          Купить
-        </button>
+        <BuyButton onBuyButtonClick={onBuyButtonClick} id={id} />
         <DetailsButton type='btn--transparent' id={id}/>
       </div>
     </div>

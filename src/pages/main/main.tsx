@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import Banner from '../../components/banner/banner';
@@ -8,12 +8,11 @@ import FilterForm from '../../components/filter-form/filter-form';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import ProductsList from '../../components/products-list/products-list';
 import Pagination from '../../components/pagination/pagination';
+import BuyModal from '../../components/buy-modal/buy-modal';
 import Footer from '../../components/footer/footer';
 import { useAppSelector, useAppDispatch } from '../../components/hooks';
-import {
-  getProducts,
-  getPageNumber
-} from '../../store/products-data/products-data.selectors';
+import {getProducts,getPageNumber} from '../../store/products-data/products-data.selectors';
+import { fetchActiveProduct } from '../../store/api-actions';
 import { Product } from '../../types/types';
 import { PRODUCTS_PRO_PAGE } from '../../const';
 import { changePage } from '../../store/products-data/products-data.slice';
@@ -49,6 +48,14 @@ function Main(): JSX.Element {
     }
   }, [param, currentPage, dispatch, setParams, pageCount]);
 
+  const [isModalBuyShow, setIsModalBuyShow] = useState(false);
+
+  const onBuyButtonClick = (id: number) => {
+    setIsModalBuyShow(true);
+    dispatch(fetchActiveProduct(id));
+    document.body.style.overflow = 'hidden';
+  };
+
   return (
     <div className="wrapper">
       <Helmet>
@@ -68,7 +75,7 @@ function Main(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <SortingForm />
-                  <ProductsList products={currentPageData} />
+                  <ProductsList products={currentPageData} onBuyButtonClick={onBuyButtonClick}/>
                   {pageCount > 1 && (
                     <Pagination
                       pageCount={pageCount}
@@ -80,6 +87,7 @@ function Main(): JSX.Element {
             </div>
           </section>
         </div>
+        <BuyModal isActive={isModalBuyShow}/>
       </main>
       <Footer />
     </div>

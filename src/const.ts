@@ -28,5 +28,6 @@ export enum RequestStatus {
 export enum APIRoute {
   Products = '/cameras',
   Promo = '/promo',
+  ActiveProduct = '/cameras/',
 }
 

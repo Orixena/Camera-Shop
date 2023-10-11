@@ -3,15 +3,18 @@ import { Product } from '../../types/types';
 
 type ProductListProps = {
   products: Product[];
+  onBuyButtonClick: (id: number) => void;
 }
 
-function ProductsList({products}: ProductListProps):JSX.Element {
+function ProductsList({products, onBuyButtonClick}: ProductListProps):JSX.Element {
+
   return (
     <div className="cards catalog__cards">
       {products.map((product) => (
         <ProductCard
           key={product.id}
           product={product}
+          onBuyButtonClick={onBuyButtonClick}
         />
       ))}
     </div>
