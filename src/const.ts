@@ -10,6 +10,7 @@ export enum AppRoute {
   Guarantees = '/',
   Delivery = '/',
   AboutCompany = '/',
+  NotFound = '*',
 }
 
 export enum FetchingNameSpace {
