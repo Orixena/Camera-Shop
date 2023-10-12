@@ -10,6 +10,10 @@ function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element {
 
   const activeProduct = useAppSelector(getActiveProduct);
 
+  if (!activeProduct) {
+    return <div></div>;
+  }
+
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
       <div className="modal__wrapper">
@@ -24,29 +28,29 @@ function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element {
               <picture>
                 <source
                   type="image/webp"
-                  srcSet={activeProduct?.previewImgWebp}
+                  srcSet={`/${activeProduct.previewImgWebp}, /${activeProduct.previewImgWebp2x}`}
                 />
                 <img
-                  src={activeProduct?.previewImg}
-                  srcSet={activeProduct?.previewImg2x}
+                  src={activeProduct.previewImg}
+                  srcSet={activeProduct.previewImg2x}
                   width={140}
                   height={120}
-                  alt={activeProduct?.name}
+                  alt={activeProduct.name}
                 />
               </picture>
             </div>
             <div className="basket-item__description">
-              <p className="basket-item__title">{activeProduct?.name}</p>
+              <p className="basket-item__title">{activeProduct.name}</p>
               <ul className="basket-item__list">
                 <li className="basket-item__list-item">
                   <span className="basket-item__article">Артикул:</span>{' '}
-                  <span className="basket-item__number">{activeProduct?.vendorCode}</span>
+                  <span className="basket-item__number">{activeProduct.vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">{activeProduct?.type}</li>
-                <li className="basket-item__list-item">{activeProduct?.level}</li>
+                <li className="basket-item__list-item">{activeProduct.type}</li>
+                <li className="basket-item__list-item">{activeProduct.level}</li>
               </ul>
               <p className="basket-item__price">
-                <span className="visually-hidden">Цена:</span>{activeProduct?.price} ₽
+                <span className="visually-hidden">Цена:</span>{activeProduct.price} ₽
               </p>
             </div>
           </div>

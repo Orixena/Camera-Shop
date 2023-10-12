@@ -7,6 +7,7 @@ import { getActiveProduct } from '../../store/active-product-data/active-product
 import { AppRoute } from '../../const';
 import Header from '../../components/header/header';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
+import BuyModal from '../../components/buy-modal/buy-modal';
 import Footer from '../../components/footer/footer';
 import classNames from 'classnames';
 
@@ -25,6 +26,7 @@ function Product(): JSX.Element {
 
   const [isActiveDescription, setIsActiveDescription] = useState(true);
   const [param, setParams] = useSearchParams();
+  const [isModalBuyShow, setIsModalBuyShow] = useState(false);
 
   useEffect(() => {
     if(param.size === 0){
@@ -48,6 +50,29 @@ function Product(): JSX.Element {
     setParams({about: 'description'});
   };
 
+  const onAddToBasketButtonClick = (i: number) => {
+    setIsModalBuyShow(true);
+    dispatch(fetchActiveProduct(i));
+    document.body.style.overflow = 'hidden';
+  };
+
+  const onOverlayOrExitClick = () => {
+    setIsModalBuyShow(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  useEffect(() => {
+    const onClickEsc = (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
+        onOverlayOrExitClick();
+      }
+    };
+    document.addEventListener('keydown', onClickEsc);
+
+    return () => {
+      document.removeEventListener('keydown', onClickEsc);
+    };
+  }, []);
 
   if (!product) {
     return <div></div>;
@@ -108,7 +133,10 @@ function Product(): JSX.Element {
                     <span className="visually-hidden">Цена:</span>
                     {product.price} ₽
                   </p>
-                  <button className="btn btn--purple" type="button">
+                  <button className="btn btn--purple" type="button" onClick={() => {
+                    onAddToBasketButtonClick(product.id);
+                  }}
+                  >
                     <svg width={24} height={16} aria-hidden="true">
                       <use xlinkHref="#icon-add-basket" />
                     </svg>
@@ -722,6 +750,7 @@ function Product(): JSX.Element {
             </section>
           </div>
         </div>
+        <BuyModal isActive={isModalBuyShow} onOverlayOrExitClick={onOverlayOrExitClick}/>
       </main>
       <a className="up-btn" href="#header">
         <svg width={12} height={18} aria-hidden="true">
