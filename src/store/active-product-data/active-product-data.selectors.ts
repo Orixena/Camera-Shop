@@ -8,3 +8,8 @@ export const getActiveProduct = createSelector(
   (state: ActiveProductData) => state.activeProduct
 );
 
+export const getSimilarProducts = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.similarProducts
+);
+
