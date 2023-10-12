@@ -55,7 +55,7 @@ function Product(): JSX.Element {
     setParams({about: 'description'});
   };
 
-  const onAddToBasketButtonClick = (i: number) => {
+  const onBuyButtonClick = (i: number) => {
     setIsModalBuyShow(true);
     dispatch(fetchActiveProduct(i));
     document.body.style.overflow = 'hidden';
@@ -139,7 +139,7 @@ function Product(): JSX.Element {
                     {product.price} ₽
                   </p>
                   <button className="btn btn--purple" type="button" onClick={() => {
-                    onAddToBasketButtonClick(product.id);
+                    onBuyButtonClick(product.id);
                   }}
                   >
                     <svg width={24} height={16} aria-hidden="true">
@@ -210,7 +210,7 @@ function Product(): JSX.Element {
             </section>
           </div>
           <div className="page-content__section">
-            <SimilarProductsList similarProducts={similarProducts}/>
+            <SimilarProductsList similarProducts={similarProducts} onBuyButtonClick={onBuyButtonClick}/>
           </div>
           <div className="page-content__section">
             <section className="review-block">

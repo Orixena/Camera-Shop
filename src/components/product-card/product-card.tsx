@@ -1,18 +1,24 @@
 import DetailsButton from '../buttons/details-button';
 import BuyButton from '../buy-button/buy-button';
 import { Product } from '../../types/types';
+import classNames from 'classnames';
 
 type ProductCardProps = {
   product: Product;
   onBuyButtonClick: (id: number) => void;
+  isSimilarActive?: boolean;
 }
 
-function ProductCard({product,onBuyButtonClick}: ProductCardProps):JSX.Element {
+function ProductCard({product,onBuyButtonClick, isSimilarActive = false}: ProductCardProps):JSX.Element {
 
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, reviewCount } = product;
 
   return (
-    <div className="product-card">
+    <div className={classNames({
+      'product-card': true,
+      'is-active': isSimilarActive,
+    })}
+    >
       <div className="product-card__img">
         <picture>
           <source

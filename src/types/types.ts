@@ -46,6 +46,6 @@ export type ActiveProduct = Product | null;
 export type ActiveProductData = {
   activeProduct: ActiveProduct;
   fetchingStatusActiveProduct: RequestStatus;
-  similarProducts: Product[] | Product | null;
+  similarProducts: Product[] | null;
   fetchingStatusSimilarProducts: RequestStatus;
 }
