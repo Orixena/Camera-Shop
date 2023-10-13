@@ -13,3 +13,8 @@ export const getSimilarProducts = createSelector(
   (state: ActiveProductData) => state.similarProducts
 );
 
+export const getReviews = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.reviews
+);
+

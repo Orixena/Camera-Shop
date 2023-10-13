@@ -48,4 +48,17 @@ export type ActiveProductData = {
   fetchingStatusActiveProduct: RequestStatus;
   similarProducts: Product[] | null;
   fetchingStatusSimilarProducts: RequestStatus;
+  reviews: Review[] | null;
+  fetchingStatusReviews: RequestStatus;
+}
+
+export type Review = {
+    id: string;
+    createAt: string;
+    cameraId: number;
+    userName: string;
+    advantage: string;
+    disadvantage: string;
+    review: string;
+    rating: number;
 }
