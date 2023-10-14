@@ -18,3 +18,7 @@ export const getReviews = createSelector(
   (state: ActiveProductData) => state.reviews
 );
 
+export const getFetchingStatusReviews = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.fetchingStatusReviews
+);

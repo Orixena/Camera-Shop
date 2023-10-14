@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { fetchActiveProduct, fetchSimilarProducts, fetchReviews } from '../../store/api-actions';
-import { getActiveProduct, getSimilarProducts, getReviews } from '../../store/active-product-data/active-product-data.selectors';
-import { AppRoute } from '../../const';
+import { getActiveProduct, getSimilarProducts, getReviews, getFetchingStatusReviews } from '../../store/active-product-data/active-product-data.selectors';
+import { AppRoute, RequestStatus } from '../../const';
 import Header from '../../components/header/header';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
 import BuyModal from '../../components/buy-modal/buy-modal';
@@ -12,8 +12,9 @@ import Footer from '../../components/footer/footer';
 import classNames from 'classnames';
 import SimilarProductsList from '../../components/similar-products-list/similar-products-list';
 import ReviewList from '../../components/review-list/review-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function Product(): JSX.Element {
+function Product(): JSX.Element | null {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function Product(): JSX.Element {
   const product = useAppSelector(getActiveProduct);
   const similarProducts = useAppSelector(getSimilarProducts);
   const reviews = useAppSelector(getReviews);
+  const loadingReviews = useAppSelector(getFetchingStatusReviews);
   console.log(reviews);
 
   const [isActiveDescription, setIsActiveDescription] = useState(true);
@@ -83,8 +85,12 @@ function Product(): JSX.Element {
     };
   }, []);
 
+  if(loadingReviews === RequestStatus.Pending){
+    return <LoadingScreen />;
+  }
+
   if (!product) {
-    return <div></div>;
+    return null;
   }
 
   return (
