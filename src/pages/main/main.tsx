@@ -16,11 +16,16 @@ import { fetchActiveProduct } from '../../store/api-actions';
 import { Product } from '../../types/types';
 import { PRODUCTS_PRO_PAGE } from '../../const';
 import { changePage } from '../../store/products-data/products-data.slice';
+import { clearActiveProduct } from '../../store/active-product-data/active-product-data.slice';
 
 function Main(): JSX.Element {
   const products = useAppSelector(getProducts);
   const currentPage = useAppSelector(getPageNumber);
   const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+    dispatch(clearActiveProduct());
+  }, [dispatch]);
 
   const sortedByPriceProducts = products
     .slice()
@@ -36,6 +41,7 @@ function Main(): JSX.Element {
   const [param, setParams] = useSearchParams();
 
   useEffect(() => {
+    console.log(currentPage);
     if (param.size === 0) {
       setParams({ page: '1' });
     } else {

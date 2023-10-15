@@ -15,7 +15,11 @@ const initialState: ActiveProductData = {
 export const activeProductData = createSlice({
   name: FetchingNameSpace.Product,
   initialState,
-  reducers:{},
+  reducers:{
+    clearActiveProduct: (state) => {
+      state.activeProduct = null;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchActiveProduct.pending, (state) => {
@@ -51,4 +55,5 @@ export const activeProductData = createSlice({
   }
 });
 
+export const { clearActiveProduct } = activeProductData.actions;
 

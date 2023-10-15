@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { fetchActiveProduct, fetchSimilarProducts, fetchReviews } from '../../store/api-actions';
-import { getActiveProduct, getSimilarProducts, getReviews, getFetchingStatusReviews } from '../../store/active-product-data/active-product-data.selectors';
+import { getActiveProduct, getSimilarProducts, getReviews, getFetchingStatusReviews, getFetchingStatusActiveProduct, getFetchingStatusSimilarProducts } from '../../store/active-product-data/active-product-data.selectors';
 import { AppRoute, RequestStatus } from '../../const';
 import Header from '../../components/header/header';
 import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
@@ -32,8 +32,9 @@ function Product(): JSX.Element | null {
   const product = useAppSelector(getActiveProduct);
   const similarProducts = useAppSelector(getSimilarProducts);
   const reviews = useAppSelector(getReviews);
+  const loadingActiveProduct = useAppSelector(getFetchingStatusActiveProduct);
   const loadingReviews = useAppSelector(getFetchingStatusReviews);
-  console.log(reviews);
+  const loadingSimilarProducts = useAppSelector(getFetchingStatusSimilarProducts);
 
   const [isActiveDescription, setIsActiveDescription] = useState(true);
   const [param, setParams] = useSearchParams();
@@ -85,7 +86,7 @@ function Product(): JSX.Element | null {
     };
   }, []);
 
-  if(loadingReviews === RequestStatus.Pending){
+  if(loadingActiveProduct === RequestStatus.Pending || loadingReviews === RequestStatus.Pending || loadingSimilarProducts === RequestStatus.Pending){
     return <LoadingScreen />;
   }
 

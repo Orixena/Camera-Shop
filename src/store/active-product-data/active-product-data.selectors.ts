@@ -22,3 +22,13 @@ export const getFetchingStatusReviews = createSelector(
   (state: State) => state[FetchingNameSpace.Product],
   (state: ActiveProductData) => state.fetchingStatusReviews
 );
+
+export const getFetchingStatusSimilarProducts = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.fetchingStatusSimilarProducts
+);
+
+export const getFetchingStatusActiveProduct = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.fetchingStatusActiveProduct
+);
