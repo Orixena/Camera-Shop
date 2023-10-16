@@ -1,5 +1,6 @@
 import DetailsButton from '../buttons/details-button';
 import BuyButton from '../buy-button/buy-button';
+import RatingStars from '../rating-stars/rating-stars';
 import { Product } from '../../types/types';
 import classNames from 'classnames';
 
@@ -35,27 +36,7 @@ function ProductCard({product,onBuyButtonClick, isSimilarActive = false}: Produc
         </picture>
       </div>
       <div className="product-card__info">
-        <div className="rate product-card__rate">
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <p className="visually-hidden">Рейтинг: {rating}</p>
-          <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
-          </p>
-        </div>
+        <RatingStars rating={rating} reviewCount={reviewCount}/>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price">
           <span className="visually-hidden">Цена:</span>{price} ₽

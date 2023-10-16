@@ -10,6 +10,7 @@ import BreadCrumbs from '../../components/bread-crumbs/bread-crumbs';
 import BuyModal from '../../components/buy-modal/buy-modal';
 import Footer from '../../components/footer/footer';
 import classNames from 'classnames';
+import RatingStars from '../../components/rating-stars/rating-stars';
 import SimilarProductsList from '../../components/similar-products-list/similar-products-list';
 import ReviewList from '../../components/review-list/review-list';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -123,28 +124,7 @@ function Product(): JSX.Element | null {
                 </div>
                 <div className="product__content">
                   <h1 className="title title--h3">{product.name}</h1>
-                  <div className="rate product__rate">
-                    <svg width={17} height={16} aria-hidden="true">
-                      <use xlinkHref="#icon-full-star" />
-                    </svg>
-                    <svg width={17} height={16} aria-hidden="true">
-                      <use xlinkHref="#icon-full-star" />
-                    </svg>
-                    <svg width={17} height={16} aria-hidden="true">
-                      <use xlinkHref="#icon-full-star" />
-                    </svg>
-                    <svg width={17} height={16} aria-hidden="true">
-                      <use xlinkHref="#icon-full-star" />
-                    </svg>
-                    <svg width={17} height={16} aria-hidden="true">
-                      <use xlinkHref="#icon-star" />
-                    </svg>
-                    <p className="visually-hidden">Рейтинг: {product.rating}</p>
-                    <p className="rate__count">
-                      <span className="visually-hidden">Всего оценок:</span>
-                      {product.reviewCount}
-                    </p>
-                  </div>
+                  <RatingStars rating={product.rating} reviewCount={product.reviewCount}/>
                   <p className="product__price">
                     <span className="visually-hidden">Цена:</span>
                     {product.price} ₽
