@@ -41,7 +41,6 @@ function Main(): JSX.Element {
   const [param, setParams] = useSearchParams();
 
   useEffect(() => {
-    console.log(currentPage);
     if (param.size === 0) {
       setParams({ page: '1' });
     } else {

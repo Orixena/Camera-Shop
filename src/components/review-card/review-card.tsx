@@ -1,16 +1,19 @@
 import { Review } from '../../types/types';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 
 type ReviewCardProps = {
   review: Review;
 }
 
 function ReviewCard({review}: ReviewCardProps): JSX.Element {
+
   return (
     <li className="review-card">
       <div className="review-card__head">
         <p className="title title--h4">{review.userName}</p>
-        <time className="review-card__data" dateTime="2022-04-13">
-          {review.createAt}
+        <time className="review-card__data" dateTime={review.createAt}>
+          {dayjs(review.createAt).locale('ru').format('DD MMMM')}
         </time>
       </div>
       <div className="rate review-card__rate">
