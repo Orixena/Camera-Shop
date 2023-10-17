@@ -32,3 +32,8 @@ export const getFetchingStatusActiveProduct = createSelector(
   (state: State) => state[FetchingNameSpace.Product],
   (state: ActiveProductData) => state.fetchingStatusActiveProduct
 );
+
+export const getSendingStatusReview = createSelector(
+  (state: State) => state[FetchingNameSpace.Product],
+  (state: ActiveProductData) => state.sendingStatusReview
+);

@@ -8,6 +8,8 @@ type ReviewCardProps = {
 
 function ReviewCard({review}: ReviewCardProps): JSX.Element {
 
+  const RATING_REVIEW_GRADES = [1,2,3,4,5];
+
   return (
     <li className="review-card">
       <div className="review-card__head">
@@ -17,21 +19,11 @@ function ReviewCard({review}: ReviewCardProps): JSX.Element {
         </time>
       </div>
       <div className="rate review-card__rate">
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
+        {RATING_REVIEW_GRADES.map((el) => (
+          <svg key={el} width={17} height={16} aria-hidden="true">
+            <use xlinkHref={el <= review.rating ? '#icon-full-star' : '#icon-star'} />
+          </svg>
+        ))}
         <p className="visually-hidden">Оценка: {review.rating}</p>
       </div>
       <ul className="review-card__list">

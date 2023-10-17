@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchActiveProduct, fetchSimilarProducts, fetchReviews } from '../api-actions';
+import { fetchActiveProduct, fetchSimilarProducts, fetchReviews, postReview } from '../api-actions';
 import { ActiveProductData } from '../../types/types';
 import { RequestStatus, FetchingNameSpace } from '../../const';
 
@@ -8,8 +8,9 @@ const initialState: ActiveProductData = {
   fetchingStatusActiveProduct: RequestStatus.Unsent,
   similarProducts: null,
   fetchingStatusSimilarProducts: RequestStatus.Unsent,
-  reviews: null,
+  reviews: [],
   fetchingStatusReviews: RequestStatus.Unsent,
+  sendingStatusReview: RequestStatus.Unsent,
 };
 
 export const activeProductData = createSlice({
@@ -18,6 +19,9 @@ export const activeProductData = createSlice({
   reducers:{
     clearActiveProduct: (state) => {
       state.activeProduct = null;
+    },
+    dropSendingStatusReview(state) {
+      state.sendingStatusReview = RequestStatus.Unsent;
     }
   },
   extraReducers(builder) {
@@ -51,9 +55,19 @@ export const activeProductData = createSlice({
       })
       .addCase(fetchReviews.rejected, (state) => {
         state.fetchingStatusReviews = RequestStatus.Error;
+      })
+      .addCase(postReview.pending, (state) => {
+        state.sendingStatusReview = RequestStatus.Pending;
+      })
+      .addCase(postReview.fulfilled, (state,action) => {
+        state.sendingStatusReview = RequestStatus.Success;
+        state.reviews.push(action.payload);
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.sendingStatusReview = RequestStatus.Error;
       });
   }
 });
 
-export const { clearActiveProduct } = activeProductData.actions;
+export const { clearActiveProduct, dropSendingStatusReview } = activeProductData.actions;
 

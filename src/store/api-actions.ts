@@ -1,7 +1,7 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import { Product, Promo, ActiveProduct, Review } from '../types/types.js';
+import { Product, Promo, ActiveProduct, Review, Comment } from '../types/types.js';
 import { FetchingNameSpace, APIRoute } from '../const.js';
 
 export const fetchProductsAction = createAsyncThunk<Product[], undefined,{
@@ -56,15 +56,27 @@ export const fetchSimilarProducts = createAsyncThunk<Product[] | null, number,{
   }
 );
 
-export const fetchReviews = createAsyncThunk<Review[] | null, number,{
+export const fetchReviews = createAsyncThunk<Review[], number,{
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   `${FetchingNameSpace.Product}/fetchReviews`,
   async (id, { extra: api}) => {
-    const { data } = await api.get<Review[] | null>(`${APIRoute.Products}/${id}/reviews`);
+    const { data } = await api.get<Review[]>(`${APIRoute.Products}/${id}/reviews`);
 
+    return data;
+  }
+);
+
+export const postReview = createAsyncThunk<Review, {reviewData: Comment},{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${FetchingNameSpace.Product}/postReview`,
+  async ({reviewData}, { extra:api}) => {
+    const {data} = await api.post<Review>(APIRoute.Reviews, reviewData);
     return data;
   }
 );

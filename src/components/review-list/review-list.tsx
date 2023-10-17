@@ -9,7 +9,7 @@ type RewievListProps = {
 
 const showReviewsCount = 3;
 
-function ReviewList({ reviews }: RewievListProps): JSX.Element | null {
+function ReviewList({ reviews }: RewievListProps): JSX.Element {
   const [showReviews, setShowReviews] = useState(1);
 
   const onMoreReviewsButtonClick = () => {
@@ -17,7 +17,7 @@ function ReviewList({ reviews }: RewievListProps): JSX.Element | null {
   };
 
   if(!reviews){
-    return null;
+    return <div></div>;
   }
   const renderReviews = reviews.slice(0, showReviews * showReviewsCount);
 

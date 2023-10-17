@@ -30,5 +30,14 @@ export enum APIRoute {
   Products = '/cameras',
   Promo = '/promo',
   ActiveProduct = '/cameras/',
+  Reviews = '/reviews',
 }
+
+export const Stars = [
+  'Ужасно',
+  'Плохо',
+  'Нормально',
+  'Хорошо',
+  'Отлично',
+] as const;
 

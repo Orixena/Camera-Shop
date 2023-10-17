@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import RatingStars from '../../components/rating-stars/rating-stars';
 import SimilarProductsList from '../../components/similar-products-list/similar-products-list';
 import ReviewList from '../../components/review-list/review-list';
+import ReviewModal from '../../components/review-modal/review-modal';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function Product(): JSX.Element | null {
@@ -40,6 +41,7 @@ function Product(): JSX.Element | null {
   const [isActiveDescription, setIsActiveDescription] = useState(true);
   const [param, setParams] = useSearchParams();
   const [isModalBuyShow, setIsModalBuyShow] = useState(false);
+  const [isModalReviewShow, setIsModalReviewShow] = useState(false);
 
   useEffect(() => {
     if(param.size === 0){
@@ -69,8 +71,14 @@ function Product(): JSX.Element | null {
     document.body.style.overflow = 'hidden';
   };
 
+  const onReviewButtonClick = () => {
+    setIsModalReviewShow(true);
+    document.body.style.overflow = 'hidden';
+  };
+
   const onOverlayOrExitClick = () => {
     setIsModalBuyShow(false);
+    setIsModalReviewShow(false);
     document.body.style.overflow = 'unset';
   };
 
@@ -208,11 +216,17 @@ function Product(): JSX.Element | null {
               <div className="container">
                 <div className="page-content__headed">
                   <h2 className="title title--h3">Отзывы</h2>
-                  <button className="btn" type="button">
+                  <button
+                    className="btn"
+                    type="button"
+                    onClick={() => {
+                      onReviewButtonClick();
+                    }}
+                  >
                     Оставить свой отзыв
                   </button>
                 </div>
-                <ReviewList reviews={reviews}/>
+                {reviews && <ReviewList reviews={[...reviews].sort((a,b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime())}/>}
               </div>
             </section>
           </div>
@@ -224,6 +238,11 @@ function Product(): JSX.Element | null {
           <use xlinkHref="#icon-arrow2" />
         </svg>
       </a>
+      <ReviewModal
+        isActive={isModalReviewShow}
+        onOverlayOrExitClick={onOverlayOrExitClick}
+        id={product.id}
+      />
       <Footer />
     </div>
   );

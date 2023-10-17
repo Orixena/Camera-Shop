@@ -48,17 +48,27 @@ export type ActiveProductData = {
   fetchingStatusActiveProduct: RequestStatus;
   similarProducts: Product[] | null;
   fetchingStatusSimilarProducts: RequestStatus;
-  reviews: Review[] | null;
+  reviews: Review[];
   fetchingStatusReviews: RequestStatus;
+  sendingStatusReview: RequestStatus;
 }
 
 export type Review = {
-    id: string;
-    createAt: string;
-    cameraId: number;
-    userName: string;
-    advantage: string;
-    disadvantage: string;
-    review: string;
-    rating: number;
+  id: string;
+  createAt: string;
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}
+
+export type Comment = {
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
 }

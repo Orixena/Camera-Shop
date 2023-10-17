@@ -6,12 +6,12 @@ type BuyModalProps = {
   onOverlayOrExitClick: () => void;
 }
 
-function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element {
+function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element | null{
 
   const activeProduct = useAppSelector(getActiveProduct);
 
   if (!activeProduct) {
-    return <div></div>;
+    return null;
   }
 
   return (
