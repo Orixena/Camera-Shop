@@ -5,14 +5,16 @@ import StarItem from '../star-item/star-item';
 import { getSendingStatusReview } from '../../store/active-product-data/active-product-data.selectors';
 import { dropSendingStatusReview } from '../../store/active-product-data/active-product-data.slice';
 import { RequestStatus } from '../../const';
+import classNames from 'classnames';
 
 type ReviewModalProps = {
   isActive: boolean;
   onOverlayOrExitClick: () => void;
   id: number;
+  handleSuccessModalShow: (value: React.SetStateAction<boolean>) => void;
 };
 
-function ReviewModal({isActive, onOverlayOrExitClick, id}: ReviewModalProps): JSX.Element {
+function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow}: ReviewModalProps): JSX.Element {
 
   const dispatch = useAppDispatch();
   const sendingStatus = useAppSelector(getSendingStatusReview);
@@ -54,8 +56,15 @@ function ReviewModal({isActive, onOverlayOrExitClick, id}: ReviewModalProps): JS
     />
   ));
 
+  function checkLength (value: string) {
+    if(value.length < 2 || value.length > 160){
+      return false;
+    }
+  }
+
   function handleFormSubmit(evt: FormEvent<HTMLFormElement>){
     evt.preventDefault();
+    checkLength(userName);
     dispatch(
       postReview({reviewData: {cameraId: id, userName, advantage, disadvantage, review, rating}})
     );
@@ -75,12 +84,13 @@ function ReviewModal({isActive, onOverlayOrExitClick, id}: ReviewModalProps): JS
           dispatch(dropSendingStatusReview());
           setIsSubmitting(false);
           onOverlayOrExitClick();
+          handleSuccessModalShow(true);
           break;
         case RequestStatus.Pending:
           setIsSubmitting(true);
           break;
         case RequestStatus.Error:
-          toast.warn('Комментарий не отправлен');
+          //toast.warn('Комментарий не отправлен');
           setIsSubmitting(false);
           break;
         default:
@@ -91,7 +101,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id}: ReviewModalProps): JS
     return () => {
       isMounted = false;
     };
-  }, [sendingStatus, dispatch]);
+  }, [sendingStatus, dispatch, handleSuccessModalShow, onOverlayOrExitClick]);
 
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
@@ -123,7 +133,11 @@ function ReviewModal({isActive, onOverlayOrExitClick, id}: ReviewModalProps): JS
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
-                <div className="custom-input form-review__item">
+                <div className={classNames({
+                  'custom-input form-review__item': true,
+                  'is-invalid': userName.length < 2 || userName.length > 160
+                })}
+                >
                   <label>
                     <span className="custom-input__label">
                       Ваше имя

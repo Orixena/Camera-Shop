@@ -15,6 +15,7 @@ import SimilarProductsList from '../../components/similar-products-list/similar-
 import ReviewList from '../../components/review-list/review-list';
 import ReviewModal from '../../components/review-modal/review-modal';
 import LoadingScreen from '../loading-screen/loading-screen';
+import ModalSuccess from '../../components/modal-success/modal-success';
 
 function Product(): JSX.Element | null {
   const { id } = useParams();
@@ -42,6 +43,7 @@ function Product(): JSX.Element | null {
   const [param, setParams] = useSearchParams();
   const [isModalBuyShow, setIsModalBuyShow] = useState(false);
   const [isModalReviewShow, setIsModalReviewShow] = useState(false);
+  const [isModalSuccessShow, setIsModalSuccessShow] = useState(false);
 
   useEffect(() => {
     if(param.size === 0){
@@ -79,7 +81,13 @@ function Product(): JSX.Element | null {
   const onOverlayOrExitClick = () => {
     setIsModalBuyShow(false);
     setIsModalReviewShow(false);
+    setIsModalSuccessShow(false);
     document.body.style.overflow = 'unset';
+  };
+
+  const handleSuccessModalShow = (value: React.SetStateAction<boolean>) => {
+    setIsModalSuccessShow(value);
+    document.body.style.overflow = 'hidden';
   };
 
   useEffect(() => {
@@ -242,7 +250,9 @@ function Product(): JSX.Element | null {
         isActive={isModalReviewShow}
         onOverlayOrExitClick={onOverlayOrExitClick}
         id={product.id}
+        handleSuccessModalShow={handleSuccessModalShow}
       />
+      {isModalSuccessShow && <ModalSuccess onOverlayOrExitClick={onOverlayOrExitClick}/>}
       <Footer />
     </div>
   );
