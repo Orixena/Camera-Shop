@@ -1,11 +1,8 @@
-import { FormEvent, useState, ChangeEvent, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useAppDispatch } from '../hooks';
 import { postReview } from '../../store/api-actions';
-import StarItem from '../star-item/star-item';
-import { getSendingStatusReview } from '../../store/active-product-data/active-product-data.selectors';
-import { dropSendingStatusReview } from '../../store/active-product-data/active-product-data.slice';
-import { RequestStatus } from '../../const';
-import classNames from 'classnames';
+import { Comment } from '../../types/types';
 
 type ReviewModalProps = {
   isActive: boolean;
@@ -14,94 +11,31 @@ type ReviewModalProps = {
   handleSuccessModalShow: (value: React.SetStateAction<boolean>) => void;
 };
 
-function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow}: ReviewModalProps): JSX.Element {
+function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow,}: ReviewModalProps): JSX.Element {
+  const {register, handleSubmit, formState: { errors },} = useForm<Comment>();
+  const [rate, setRate] = useState(0);
+
+  const inputErrorClass = 'is-invalid custom-input form-review__item';
+  const inputNoErrorClass = 'custom-input form-review__item';
+  const textAreaErrorClass = 'is-invalid custom-textarea form-review__item';
+  const textAreaNoErrorClass = 'custom-textarea form-review__item';
 
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector(getSendingStatusReview);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [userName, setUserName] = useState('');
-  const [advantage, setAdvantage] = useState('');
-  const [disadvantage, setDisadvantage] = useState('');
-  const [review, setReview] = useState('');
-  const [rating, setRating] = useState(0);
-
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(evt.target.value));
-  };
-
-  const handleUserNameChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setUserName(evt.target.value);
-  };
-
-  const handleAdvantageChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setAdvantage(evt.target.value);
-  };
-
-  const handleDisadvantageChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setDisadvantage(evt.target.value);
-  };
-
-  const handleReviewChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(evt.target.value);
-  };
-
-  const ratingStars = [5, 4, 3, 2, 1].map((star) => (
-    <StarItem
-      key={star}
-      star={star}
-      disabled={isSubmitting}
-      checked={Number(rating) === star}
-      onChange={handleRatingChange}
-    />
-  ));
-
-  function checkLength (value: string) {
-    if(value.length < 2 || value.length > 160){
-      return false;
-    }
-  }
-
-  function handleFormSubmit(evt: FormEvent<HTMLFormElement>){
-    evt.preventDefault();
-    checkLength(userName);
+  const onSubmit = (data: Comment) => {
     dispatch(
-      postReview({reviewData: {cameraId: id, userName, advantage, disadvantage, review, rating}})
+      postReview({
+        cameraId: id,
+        userName: data.userName,
+        advantage: data.advantage,
+        disadvantage: data.disadvantage,
+        review: data.review,
+        rating: Number(data.rating),
+      })
     );
-  }
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted) {
-      switch (sendingStatus) {
-        case RequestStatus.Success:
-          setUserName('');
-          setAdvantage('');
-          setDisadvantage('');
-          setReview('');
-          setRating(0);
-          dispatch(dropSendingStatusReview());
-          setIsSubmitting(false);
-          onOverlayOrExitClick();
-          handleSuccessModalShow(true);
-          break;
-        case RequestStatus.Pending:
-          setIsSubmitting(true);
-          break;
-        case RequestStatus.Error:
-          //toast.warn('Комментарий не отправлен');
-          setIsSubmitting(false);
-          break;
-        default:
-          setIsSubmitting(false);
-      }
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [sendingStatus, dispatch, handleSuccessModalShow, onOverlayOrExitClick]);
+    onOverlayOrExitClick();
+    handleSuccessModalShow(true);
+  };
 
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
@@ -115,106 +49,174 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post" onSubmit={handleFormSubmit}>
+            <form
+              onSubmit={(evt) => {
+                evt.preventDefault();
+                handleSubmit(onSubmit)(evt);
+              }}
+              method="post"
+            >
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">
                   <legend className="rate__caption">
                     Рейтинг
-                    <svg width={9} height={9} aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake" />
+                    <svg width="9" height="9" aria-hidden="true">
+                      <use xlinkHref="#icon-snowflake"></use>
                     </svg>
                   </legend>
                   <div className="rate__bar">
-                    <div className="rate__group">{ratingStars}</div>
+                    <div className="rate__group">
+                      <input
+                        {...register('rating', { required: true })}
+                        className="visually-hidden"
+                        id="star-5"
+                        name="rating"
+                        type="radio"
+                        value="5"
+                        onClick={() => setRate(5)}
+                      />
+                      <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
+                      <input
+                        {...register('rating', { required: true })}
+                        className="visually-hidden"
+                        id="star-4"
+                        name="rating"
+                        type="radio"
+                        value="4"
+                        onClick={() => setRate(4)}
+                      />
+                      <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
+                      <input
+                        {...register('rating', { required: true })}
+                        className="visually-hidden"
+                        id="star-3"
+                        name="rating"
+                        type="radio"
+                        value="3"
+                        onClick={() => setRate(3)}
+                      />
+                      <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
+                      <input
+                        {...register('rating', { required: true })}
+                        className="visually-hidden"
+                        id="star-2"
+                        name="rating"
+                        type="radio"
+                        value="2"
+                        onClick={() => setRate(2)}
+                      />
+                      <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
+                      <input
+                        {...register('rating', { required: true })}
+                        className="visually-hidden"
+                        id="star-1"
+                        name="rating"
+                        type="radio"
+                        value="1"
+                        onClick={() => setRate(1)}
+                      />
+                      <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
+                    </div>
                     <div className="rate__progress">
-                      <span className="rate__stars">0</span> <span>/</span>{' '}
+                      <span className="rate__stars">{rate}</span>
+                      <span>/</span>
                       <span className="rate__all-stars">5</span>
                     </div>
                   </div>
-                  <p className="rate__message">Нужно оценить товар</p>
+                  <p className="rate__message">
+                    Нужно оценить товар
+                  </p>
                 </fieldset>
-                <div className={classNames({
-                  'custom-input form-review__item': true,
-                  'is-invalid': userName.length < 2 || userName.length > 160
-                })}
+                <div
+                  className={
+                    errors.userName ? inputErrorClass : inputNoErrorClass
+                  }
                 >
                   <label>
                     <span className="custom-input__label">
                       Ваше имя
-                      <svg width={9} height={9} aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake" />
+                      <svg width="9" height="9" aria-hidden="true">
+                        <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
                     <input
+                      {...register('userName', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,}/, maxLength:5 })}
+                      aria-invalid={errors.userName ? 'true' : 'false'}
                       type="text"
-                      name="user-name"
+                      name="userName"
                       placeholder="Введите ваше имя"
-                      value={userName}
-                      disabled={isSubmitting}
-                      onChange={handleUserNameChange}
-                      required
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  <p className="custom-input__error">
+                    Нужно указать имя
+                  </p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div
+                  className={
+                    errors.advantage ? inputErrorClass : inputNoErrorClass
+                  }
+                >
                   <label>
                     <span className="custom-input__label">
                       Достоинства
-                      <svg width={9} height={9} aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake" />
+                      <svg width="9" height="9" aria-hidden="true">
+                        <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
                     <input
+                      {...register('advantage', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      aria-invalid={errors.advantage ? 'true' : 'false'}
                       type="text"
-                      name="user-plus"
+                      name="advantage"
                       placeholder="Основные преимущества товара"
-                      value={advantage}
-                      disabled={isSubmitting}
-                      onChange={handleAdvantageChange}
-                      required
                     />
                   </label>
                   <p className="custom-input__error">
                     Нужно указать достоинства
                   </p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div
+                  className={
+                    errors.disadvantage ? inputErrorClass : inputNoErrorClass
+                  }
+                >
                   <label>
                     <span className="custom-input__label">
                       Недостатки
-                      <svg width={9} height={9} aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake" />
+                      <svg width="9" height="9" aria-hidden="true">
+                        <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
                     <input
+                      {...register('disadvantage', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      aria-invalid={errors.disadvantage ? 'true' : 'false'}
                       type="text"
-                      name="user-minus"
+                      name="disadvantage"
                       placeholder="Главные недостатки товара"
-                      value={disadvantage}
-                      onChange={handleDisadvantageChange}
-                      required
                     />
                   </label>
                   <p className="custom-input__error">
                     Нужно указать недостатки
                   </p>
                 </div>
-                <div className="custom-textarea form-review__item">
+                <div
+                  className={
+                    errors.review ? textAreaErrorClass : textAreaNoErrorClass
+                  }
+                >
                   <label>
                     <span className="custom-textarea__label">
                       Комментарий
-                      <svg width={9} height={9} aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake" />
+                      <svg width="9" height="9" aria-hidden="true">
+                        <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
                     <textarea
-                      name="user-comment"
+                      {...register('review', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      aria-invalid={errors.review ? 'true' : 'false'}
+                      name="review"
                       minLength={5}
                       placeholder="Поделитесь своим опытом покупки"
-                      value={review}
-                      disabled={isSubmitting}
-                      onChange={handleReviewChange}
                     />
                   </label>
                   <div className="custom-textarea__error">
