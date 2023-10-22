@@ -123,7 +123,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                       <span className="rate__all-stars">5</span>
                     </div>
                   </div>
-                  <p className="rate__message">
+                  <p style={{opacity: errors.rating ? 1 : 0}} className="rate__message">
                     Нужно оценить товар
                   </p>
                 </fieldset>
@@ -140,7 +140,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                       </svg>
                     </span>
                     <input
-                      {...register('userName', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,}/, maxLength:5 })}
+                      {...register('userName', { required: true, minLength:2, maxLength:160 })}
                       aria-invalid={errors.userName ? 'true' : 'false'}
                       type="text"
                       name="userName"
@@ -164,7 +164,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                       </svg>
                     </span>
                     <input
-                      {...register('advantage', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      {...register('advantage', { required: true, minLength:2, maxLength:160 })}
                       aria-invalid={errors.advantage ? 'true' : 'false'}
                       type="text"
                       name="advantage"
@@ -188,7 +188,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                       </svg>
                     </span>
                     <input
-                      {...register('disadvantage', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      {...register('disadvantage', { required: true, minLength:2, maxLength:160 })}
                       aria-invalid={errors.disadvantage ? 'true' : 'false'}
                       type="text"
                       name="disadvantage"
@@ -212,7 +212,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                       </svg>
                     </span>
                     <textarea
-                      {...register('review', { required: true, pattern: /[A-Za-zА-Яа-яЁё0-9]{2,160}/, maxLength:160 })}
+                      {...register('review', { required: true, minLength:2, maxLength:160 })}
                       aria-invalid={errors.review ? 'true' : 'false'}
                       name="review"
                       minLength={5}

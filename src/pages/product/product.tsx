@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { fetchActiveProduct, fetchSimilarProducts, fetchReviews } from '../../store/api-actions';
 import { getActiveProduct, getSimilarProducts, getReviews, getFetchingStatusReviews, getFetchingStatusActiveProduct, getFetchingStatusSimilarProducts } from '../../store/active-product-data/active-product-data.selectors';
@@ -108,7 +108,7 @@ function Product(): JSX.Element | null {
   }
 
   if (!product) {
-    return null;
+    return <Link to='/' />;
   }
 
   return (

@@ -8,7 +8,7 @@ function Header(): JSX.Element{
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
-              <a className="main-nav__link" href="catalog.html">
+              <a className="main-nav__link" href="/">
                 Каталог
               </a>
             </li>
