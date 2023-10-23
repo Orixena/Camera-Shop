@@ -4,11 +4,11 @@ import { PromoData } from '../../types/types';
 import { FetchingNameSpace } from '../../const';
 
 export const getPromo = createSelector(
-  (state: State) => state[FetchingNameSpace.Promo],
+  (state: Pick<State, FetchingNameSpace.Promo>) => state[FetchingNameSpace.Promo],
   (state: PromoData) => state.promo
 );
 
 export const getFetchingStatusPromo = createSelector(
-  (state: State) => state[FetchingNameSpace.Promo],
+  (state: Pick<State, FetchingNameSpace.Promo>) => state[FetchingNameSpace.Promo],
   (state: PromoData) => state.fetchingStatusPromo
 );
