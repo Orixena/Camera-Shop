@@ -40,7 +40,7 @@ describe('ProductsData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "products" to arrays with products data, "fetchingStatusProducts" to "SUCCESS" with "fetchProductsAction.fulfilled"', () => {
+  it('should set "products" to array with products data, "fetchingStatusProducts" to "SUCCESS" with "fetchProductsAction.fulfilled"', () => {
     const mockCamera = makeFakeCamera();
     const expectedState = { products: [mockCamera], fetchingStatusProducts: RequestStatus.Success, page: 0, };
 

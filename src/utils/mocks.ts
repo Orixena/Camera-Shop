@@ -1,4 +1,4 @@
-import { Product, CameraType, CameraLevel, CameraCategory, Promo } from '../types/types';
+import { Product, CameraType, CameraLevel, CameraCategory, Promo, Review, Comment } from '../types/types';
 import { name, datatype, lorem , image, commerce } from 'faker';
 
 const cameraTypeValues: CameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
@@ -39,3 +39,44 @@ export const makeFakePromos = () : Promo[] => (
     }
   ))
 );
+
+export const makeFakeProducts = () : Product[] => (
+  new Array(5).fill(null).map(() => (
+    makeFakeCamera()
+  ))
+);
+
+export const makeFakeComments = () : Review[] => (
+  new Array(6).fill(null).map(() => (
+    {
+      id: datatype.uuid(),
+      createAt: datatype.datetime.toString(),
+      cameraId: datatype.number(),
+      userName: name.firstName(),
+      advantage: lorem.sentence(),
+      disadvantage: lorem.sentence(),
+      review: lorem.sentences(),
+      rating: datatype.number({ min: 1, max: 5 }),
+    }
+  ))
+);
+
+export const makeFakeUserComment = (): Comment => ({
+  cameraId: datatype.number(),
+  userName: name.firstName(),
+  advantage: lorem.sentence(),
+  disadvantage: lorem.sentence(),
+  review: lorem.sentences(),
+  rating: datatype.number({ min: 1, max: 5 }),
+});
+
+export const makeFakeComment = (): Review => ({
+  id: datatype.uuid(),
+  createAt: datatype.datetime.toString(),
+  cameraId: datatype.number(),
+  userName: name.firstName(),
+  advantage: lorem.sentence(),
+  disadvantage: lorem.sentence(),
+  review: lorem.sentences(),
+  rating: datatype.number({ min: 1, max: 5 }),
+});
