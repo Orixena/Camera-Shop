@@ -1,8 +1,8 @@
 import { RequestStatus } from '../const';
 
-type CameraType = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
-type CameraLevel = 'Нулевой' | 'Любительский' | 'Профессиональный';
-type CameraCategory = 'Видеокамера' | 'Фотоаппарат';
+export type CameraType = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
+export type CameraLevel = 'Нулевой' | 'Любительский' | 'Профессиональный';
+export type CameraCategory = 'Видеокамера' | 'Фотоаппарат';
 
 export type Product = {
   id: number;
