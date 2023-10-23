@@ -1,4 +1,4 @@
-import { Product, CameraType, CameraLevel, CameraCategory } from '../types/types';
+import { Product, CameraType, CameraLevel, CameraCategory, Promo } from '../types/types';
 import { name, datatype, lorem , image, commerce } from 'faker';
 
 const cameraTypeValues: CameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
@@ -26,3 +26,16 @@ export const makeFakeCamera = () : Product => ({
   previewImgWebp: image.imageUrl(),
   previewImgWebp2x: image.imageUrl(),
 });
+
+export const makeFakePromos = () : Promo[] => (
+  new Array(3).fill(null).map(() => (
+    {
+      id: datatype.number(),
+      name: name.firstName(),
+      previewImg: image.imageUrl(),
+      previewImg2x: image.imageUrl(),
+      previewImgWebp: image.imageUrl(),
+      previewImgWebp2x: image.imageUrl(),
+    }
+  ))
+);
