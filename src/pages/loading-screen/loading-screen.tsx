@@ -2,7 +2,7 @@ import styles from './loading-screen.module.css';
 
 function LoadingScreen(): JSX.Element {
   return (
-    <span className={styles.loader}></span>
+    <span className={styles.loader} data-testid="loading-element"></span>
   );
 }
 

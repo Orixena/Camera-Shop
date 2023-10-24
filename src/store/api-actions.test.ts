@@ -196,7 +196,6 @@ describe('Async actions', () => {
     it('should dispatch "postReview.pending", "postReview.fulfilled" when server response 200', async() => {
       const mockComment: Comment = { cameraId: 1, userName: 'Anna', advantage: 'perfect', disadvantage: 'not found', review: 'perfect', rating: 5 };
       mockAxiosAdapter.onPost(APIRoute.Reviews).reply(200, []);
-      mockAxiosAdapter.onPost(APIRoute.Reviews).reply(200, []);
 
       await store.dispatch(postReview(mockComment));
       const actions = extractActionsTypes(store.getActions());
