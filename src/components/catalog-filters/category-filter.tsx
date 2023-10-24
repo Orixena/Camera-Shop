@@ -7,7 +7,6 @@ function CategoryFilter():JSX.Element {
           <input
             type="checkbox"
             name="photocamera"
-            //checked
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">

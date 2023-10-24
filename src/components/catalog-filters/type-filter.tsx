@@ -7,7 +7,6 @@ function TypeFilter():JSX.Element {
           <input
             type="checkbox"
             name="digital"
-            //checked
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">Цифровая</span>
@@ -17,7 +16,6 @@ function TypeFilter():JSX.Element {
         <label>
           <input type="checkbox"
             name="film"
-            //disabled
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">
@@ -39,8 +37,6 @@ function TypeFilter():JSX.Element {
           <input
             type="checkbox"
             name="collection"
-            //checked
-            //disabled
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">

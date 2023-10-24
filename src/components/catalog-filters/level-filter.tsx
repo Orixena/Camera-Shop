@@ -6,7 +6,6 @@ function LevelFilter():JSX.Element {
         <label>
           <input type="checkbox"
             name="zero"
-            //checked
           />
           <span className="custom-checkbox__icon" />
           <span className="custom-checkbox__label">Нулевой</span>
