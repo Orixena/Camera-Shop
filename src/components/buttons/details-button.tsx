@@ -10,7 +10,7 @@ function DetailsButton({type, id}: DetailsButtonProps): JSX.Element {
 
   return (
     <Link className={classNames(`${type}`, 'btn')} to={`/product/${id}`}>
-          Подробнее
+      Подробнее
     </Link>
   );
 }
