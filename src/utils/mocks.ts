@@ -1,5 +1,11 @@
 import { Product, CameraType, CameraLevel, CameraCategory, Promo, Review, Comment } from '../types/types';
 import { name, datatype, lorem , image, commerce } from 'faker';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 const cameraTypeValues: CameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
 const cameraLevelValues: CameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
@@ -80,3 +86,5 @@ export const makeFakeComment = (): Review => ({
   review: lorem.sentences(),
   rating: datatype.number({ min: 1, max: 5 }),
 });
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
