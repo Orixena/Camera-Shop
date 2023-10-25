@@ -10,7 +10,6 @@ function SortingForm():JSX.Element {
                 type="radio"
                 id="sortPrice"
                 name="sort"
-                //checked
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -25,7 +24,6 @@ function SortingForm():JSX.Element {
                 type="radio"
                 id="up"
                 name="sort-icon"
-                //checked
                 aria-label="По возрастанию"
               />
               <label htmlFor="up">
