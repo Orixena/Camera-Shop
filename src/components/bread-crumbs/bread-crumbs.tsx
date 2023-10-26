@@ -1,10 +1,8 @@
-import { useAppSelector,useAppDispatch } from '../hooks';
+import { useAppSelector } from '../hooks';
 import { getActiveProduct } from '../../store/active-product-data/active-product-data.selectors';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import { getPageNumber } from '../../store/products-data/products-data.selectors';
-import { useEffect } from 'react';
-import { changePage } from '../../store/products-data/products-data.slice';
 
 
 function BreadCrumbs(): JSX.Element {
