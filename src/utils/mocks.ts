@@ -4,6 +4,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
+import { FetchingNameSpace, RequestStatus } from '../const';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -88,3 +89,26 @@ export const makeFakeComment = (): Review => ({
 });
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  [FetchingNameSpace.Products]:{
+    products: [],
+    fetchingStatusProducts: RequestStatus.Unsent,
+    page: 0,
+  },
+  [FetchingNameSpace.Promo]: {
+    promo: [],
+    fetchingStatusPromo: RequestStatus.Unsent
+  },
+  [FetchingNameSpace.Product] : {
+    activeProduct: null,
+    fetchingStatusActiveProduct: RequestStatus.Unsent,
+    similarProducts: null,
+    fetchingStatusSimilarProducts: RequestStatus.Unsent,
+    reviews: [],
+    fetchingStatusReviews: RequestStatus.Unsent,
+    sendingStatusReview: RequestStatus.Unsent,
+  },
+  ...initialState ?? {},
+});
+
