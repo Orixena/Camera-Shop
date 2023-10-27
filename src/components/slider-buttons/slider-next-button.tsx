@@ -6,6 +6,7 @@ export default function SlideNextButton() {
   return (
     <button
       className="slider-controls slider-controls--next"
+      data-testid="next-button"
       type="button"
       aria-label="Следующий слайд"
       onClick={() => swiper.slideNext()}

@@ -6,6 +6,7 @@ export default function SlidePrevButton() {
   return (
     <button
       className="slider-controls slider-controls--prev"
+      data-testid="prev-button"
       type="button"
       aria-label="Предыдущий слайд"
       onClick={() => swiper.slidePrev()}
