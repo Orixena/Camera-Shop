@@ -101,7 +101,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     fetchingStatusPromo: RequestStatus.Unsent
   },
   [FetchingNameSpace.Product] : {
-    activeProduct: null,
+    activeProduct: makeFakeCamera(),
     fetchingStatusActiveProduct: RequestStatus.Unsent,
     similarProducts: null,
     fetchingStatusSimilarProducts: RequestStatus.Unsent,
