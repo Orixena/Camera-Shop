@@ -97,7 +97,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     page: 0,
   },
   [FetchingNameSpace.Promo]: {
-    promo: [],
+    promo: makeFakePromos(),
     fetchingStatusPromo: RequestStatus.Unsent
   },
   [FetchingNameSpace.Product] : {
