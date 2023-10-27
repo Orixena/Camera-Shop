@@ -92,7 +92,7 @@ export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
   [FetchingNameSpace.Products]:{
-    products: [],
+    products: makeFakeProducts(),
     fetchingStatusProducts: RequestStatus.Unsent,
     page: 0,
   },
