@@ -31,7 +31,7 @@ function Pagination({pageCount, currentPage}: PaginationProps):JSX.Element {
   }, [dispatch, paginationPages, currentPage]);
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-container">
       <ul className="pagination__list">
         {isPreviosButton &&
         <li className="pagination__item">
@@ -53,7 +53,7 @@ function Pagination({pageCount, currentPage}: PaginationProps):JSX.Element {
           const keyValue = `${page}`;
 
           return (
-            <li className="pagination__item" key={keyValue}>
+            <li className="pagination__item" key={keyValue} >
               <Link className={classNames({
                 'pagination__link': true,
                 'pagination__link--active': currentPage === page
