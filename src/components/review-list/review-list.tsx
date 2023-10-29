@@ -3,13 +3,13 @@ import ReviewCard from '../review-card/review-card';
 import { Review } from '../../types/types';
 import classNames from 'classnames';
 
-type RewievListProps = {
+type ReviewListProps = {
   reviews: Review[] | null;
 };
 
 const showReviewsCount = 3;
 
-function ReviewList({ reviews }: RewievListProps): JSX.Element {
+function ReviewList({ reviews }: ReviewListProps): JSX.Element {
   const [showReviews, setShowReviews] = useState(1);
 
   const onMoreReviewsButtonClick = () => {
@@ -23,7 +23,7 @@ function ReviewList({ reviews }: RewievListProps): JSX.Element {
 
   return (
     <>
-      <ul className="review-block__list">
+      <ul className="review-block__list" data-testid="review-block">
         {renderReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}

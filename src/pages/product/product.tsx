@@ -121,7 +121,7 @@ function Product(): JSX.Element | null {
         <div className="page-content">
           <BreadCrumbs />
           <div className="page-content__section">
-            <section className="product">
+            <section className="product" data-testid="product-container">
               <div className="container">
                 <div className="product__img">
                   <picture>

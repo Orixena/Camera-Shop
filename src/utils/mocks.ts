@@ -105,7 +105,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     fetchingStatusActiveProduct: RequestStatus.Unsent,
     similarProducts: null,
     fetchingStatusSimilarProducts: RequestStatus.Unsent,
-    reviews: [],
+    reviews: makeFakeComments(),
     fetchingStatusReviews: RequestStatus.Unsent,
     sendingStatusReview: RequestStatus.Unsent,
   },
