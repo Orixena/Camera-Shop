@@ -9,7 +9,6 @@ function BreadCrumbs(): JSX.Element {
   const product = useAppSelector(getActiveProduct);
   const activePage = useAppSelector(getPageNumber);
 
-
   return (
     <div className="breadcrumbs">
       <div className="container">
