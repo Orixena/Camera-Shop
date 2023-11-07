@@ -33,11 +33,4 @@ export enum APIRoute {
   Reviews = '/reviews',
 }
 
-export const Stars = [
-  'Ужасно',
-  'Плохо',
-  'Нормально',
-  'Хорошо',
-  'Отлично',
-] as const;
 
