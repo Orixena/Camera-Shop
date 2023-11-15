@@ -1,5 +1,5 @@
 import { Review } from '../../types/types';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 type ReviewCardProps = {
