@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 function SortingForm():JSX.Element {
+  const [, setActive] = useState(true);
   return (
     <div className="catalog-sort">
       <form action="#">
@@ -10,6 +13,8 @@ function SortingForm():JSX.Element {
                 type="radio"
                 id="sortPrice"
                 name="sort"
+                onChange={() => setActive((prev) => !prev)}
+                checked
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>

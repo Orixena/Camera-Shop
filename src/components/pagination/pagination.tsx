@@ -77,13 +77,18 @@ function Pagination({pageCount, currentPage}: PaginationProps):JSX.Element {
             to={'*'}
             onClick={(evt) => {
               evt.preventDefault();
-              const nextPages = paginationPages.map((page) => page + MAX_PAGINATION_PAGES_COUNT);
-              setPaginationPages(nextPages);
-              dispatch(changePage(nextPages[0]));
-              setParams({page: `${nextPages[0] + 1}`});
+              if(currentPage !== paginationPages[2]){
+                dispatch(changePage(currentPage + 1));
+                setParams({page: `${currentPage + 2}`});
+              } else {
+                const nextPages = paginationPages.map((page) => page + MAX_PAGINATION_PAGES_COUNT);
+                setPaginationPages(nextPages);
+                dispatch(changePage(nextPages[0]));
+                setParams({page: `${nextPages[0] + 1}`});
+              }
             }}
           >
-            Вперед
+            Далее
           </Link>
         </li>}
       </ul>
