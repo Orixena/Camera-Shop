@@ -35,13 +35,11 @@ function ModalSuccess({onOverlayOrExitClick}: ModalSuccessProps): JSX.Element {
               className="cross-btn"
               type="button"
               aria-label="Закрыть попап"
+              onClick={() => {
+                onOverlayOrExitClick();
+              }}
             >
-              <svg
-                onClick={() => {
-                  onOverlayOrExitClick();
-                }}
-                width={10} height={10} aria-hidden="true"
-              >
+              <svg width={10} height={10} aria-hidden="true">
                 <use xlinkHref="#icon-close" />
               </svg>
             </button>

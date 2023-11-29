@@ -14,7 +14,7 @@ type ReviewModalProps = {
 };
 
 function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow,}: ReviewModalProps): JSX.Element {
-  const {register, handleSubmit, formState: { errors },} = useForm<Comment>();
+  const {register, handleSubmit, formState: { errors }, reset} = useForm<Comment>();
   const [rate, setRate] = useState(0);
 
   const inputErrorClass = 'is-invalid custom-input form-review__item';
@@ -23,6 +23,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
   const textAreaNoErrorClass = 'custom-textarea form-review__item';
 
   const dispatch = useAppDispatch();
+  const RESET_TIMEOUT = 300;
 
   const onSubmit = (data: Comment) => {
     dispatch(
@@ -37,6 +38,8 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
     );
     onOverlayOrExitClick();
     handleSuccessModalShow(true);
+
+    setTimeout(() => reset(), RESET_TIMEOUT);
   };
 
   return (
@@ -218,7 +221,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
                         {...register('review', { required: true, minLength:2, maxLength:160 })}
                         aria-invalid={errors.review ? 'true' : 'false'}
                         name="review"
-                        minLength={5}
+                        minLength={2}
                         placeholder="Поделитесь своим опытом покупки"
                       />
                     </label>
@@ -239,11 +242,11 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
               className="cross-btn"
               type="button"
               aria-label="Закрыть попап"
+              onClick={() => {
+                onOverlayOrExitClick();
+              }}
             >
               <svg
-                onClick={() => {
-                  onOverlayOrExitClick();
-                }}
                 width={10}
                 height={10}
                 aria-hidden="true"

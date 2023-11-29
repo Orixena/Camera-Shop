@@ -71,12 +71,11 @@ function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element |
               className="cross-btn"
               type="button"
               aria-label="Закрыть попап"
-            >
-              <svg onClick={() => {
+              onClick={() => {
                 onOverlayOrExitClick();
               }}
-              width={10} height={10} aria-hidden="true"
-              >
+            >
+              <svg width={10} height={10} aria-hidden="true">
                 <use xlinkHref="#icon-close" />
               </svg>
             </button>
