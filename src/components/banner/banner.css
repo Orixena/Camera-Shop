@@ -20,3 +20,11 @@
   left: 90% !important;
   bottom: 10 !important;
 }
+
+.swiper-button-prev {
+  display: none;
+}
+
+.swiper-button-next {
+  display: none;
+}
