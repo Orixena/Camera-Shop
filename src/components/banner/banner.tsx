@@ -20,7 +20,6 @@ function Banner(): JSX.Element {
       pagination={{
         clickable: true,
       }}
-      navigation
       loop
       modules={[Autoplay, Pagination]}
     >
