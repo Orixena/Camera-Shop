@@ -29,6 +29,10 @@ function SimilarProductsList({ similarProducts, onBuyButtonClick,}: SimilarProdu
               spaceBetween={10}
               slidesPerView={3}
               slidesPerGroup={3}
+              navigation={{
+                prevEl: '.slider-controls--prev',
+                nextEl: '.slider-controls--next'
+              }}
               style={{
                 position: 'unset',
               }}

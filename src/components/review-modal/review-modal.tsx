@@ -245,6 +245,11 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
               onClick={() => {
                 onOverlayOrExitClick();
               }}
+              onKeyDown={(evt) => {
+                if (evt.code === '13'){
+                  onOverlayOrExitClick();
+                }
+              }}
             >
               <svg
                 width={10}

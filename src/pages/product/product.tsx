@@ -78,16 +78,16 @@ function Product(): JSX.Element | null {
     document.body.style.overflow = 'hidden';
   };
 
+  const handleSuccessModalShow = (value: React.SetStateAction<boolean>) => {
+    setIsModalSuccessShow(value);
+    document.body.style.overflow = 'hidden';
+  };
+
   const onOverlayOrExitClick = () => {
     setIsModalBuyShow(false);
     setIsModalReviewShow(false);
     setIsModalSuccessShow(false);
     document.body.style.overflow = 'unset';
-  };
-
-  const handleSuccessModalShow = (value: React.SetStateAction<boolean>) => {
-    setIsModalSuccessShow(value);
-    document.body.style.overflow = 'hidden';
   };
 
   useEffect(() => {

@@ -27,6 +27,11 @@ function ModalSuccess({onOverlayOrExitClick}: ModalSuccessProps): JSX.Element {
                 onClick={() => {
                   onOverlayOrExitClick();
                 }}
+                onKeyDown={(evt) => {
+                  if (evt.code === '13'){
+                    onOverlayOrExitClick();
+                  }
+                }}
               >
                 Вернуться к покупкам
               </button>
