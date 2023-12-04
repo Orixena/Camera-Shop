@@ -23,7 +23,6 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
   const textAreaNoErrorClass = 'custom-textarea form-review__item';
 
   const dispatch = useAppDispatch();
-  const RESET_TIMEOUT = 300;
 
   const onSubmit = (data: Comment) => {
     dispatch(
@@ -38,8 +37,7 @@ function ReviewModal({isActive, onOverlayOrExitClick, id, handleSuccessModalShow
     );
     onOverlayOrExitClick();
     handleSuccessModalShow(true);
-
-    setTimeout(() => reset(), RESET_TIMEOUT);
+    reset();
   };
 
   return (

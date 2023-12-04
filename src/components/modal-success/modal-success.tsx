@@ -9,7 +9,12 @@ function ModalSuccess({onOverlayOrExitClick}: ModalSuccessProps): JSX.Element {
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">
         <FocusLock group='group-3'>
-          <div className="modal__overlay" />
+          <div
+            onClick={() => {
+              onOverlayOrExitClick();
+            }}
+            className="modal__overlay"
+          />
           <div className="modal__content">
             <p className="title title--h4">Спасибо за отзыв</p>
             <svg

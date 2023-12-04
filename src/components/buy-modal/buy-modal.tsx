@@ -19,9 +19,11 @@ function BuyModal({isActive, onOverlayOrExitClick}:BuyModalProps): JSX.Element |
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
       <div className="modal__wrapper">
         <FocusLock group='group-2'>
-          <div onClick={() => {
-            onOverlayOrExitClick();
-          }} className="modal__overlay"
+          <div
+            onClick={() => {
+              onOverlayOrExitClick();
+            }}
+            className="modal__overlay"
           />
           <div className="modal__content">
             <p className="title title--h4">Добавить товар в корзину</p>
