@@ -32,7 +32,7 @@ function App(): JSX.Element {
             element={<Main />}
           />
           <Route
-            path={AppRoute.Product}
+            path={`${AppRoute.Product}:id`}
             element={<Product />}
           />
           <Route

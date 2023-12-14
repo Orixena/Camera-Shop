@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import Select from 'react-select';
 import { useAppSelector } from '../hooks';
+import { useNavigate } from 'react-router-dom';
 import { getProducts } from '../../store/products-data/products-data.selectors';
 import { Product } from '../../types/types';
+import { AppRoute } from '../../const';
 
 function SearchForm() {
   const products = useAppSelector(getProducts);
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
 
@@ -25,6 +28,13 @@ function SearchForm() {
     }
   };
 
+  const handleChange = (id : number | undefined) => {
+    if(id) {
+      navigate(`${AppRoute.Product}${id?.toString()}`);
+    }
+
+  };
+
   return (
     <>
       <Select
@@ -32,6 +42,7 @@ function SearchForm() {
         inputValue={inputValue}
         onInputChange={(newValue) => setInputValue(newValue)}
         options={loadOptions}
+        onChange={handleChange}
         isClearable
         isSearchable
       />

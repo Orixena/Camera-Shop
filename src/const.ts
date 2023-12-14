@@ -4,7 +4,7 @@ export const MAX_PAGINATION_PAGES_COUNT = 3;
 
 export enum AppRoute {
   Main = '/',
-  Product = '/product/:id',
+  Product = '/product/',
   Basket = '/basket',
   Catalogue = '/',
   Guarantees = '/',
